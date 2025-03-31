@@ -1,0 +1,31 @@
+[project]
+name = "slow-mcp"
+version = "0.1.0"
+description = "Slow MCP server"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "mcp[cli]",
+    "typer>=0.15.2",
+]
+
+[project.scripts]
+slow-mcp = "slow_mcp:start"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+dev-dependencies = [
+    "pyright>=1.1.389",
+    "pytest>=8.3.3",
+    "ruff>=0.8.1",
+]
+[tool.black]
+line-length = 99
+target-version = ["py311"]
+
+[tool.isort]
+profile = "black"
+line_length = 99
