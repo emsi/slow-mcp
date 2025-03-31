@@ -1,10 +1,6 @@
 #!/bin/sh
 
-sleep 30
-echo 30
-sleep 30
-echo 60
-sleep 30
-echo 90
-sleep 30
-echo 120
+for sec in $(seq 1 300); do
+    sleep 1
+    echo "$sec"
+done
