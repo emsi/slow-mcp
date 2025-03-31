@@ -1,11 +1,6 @@
 from enum import Enum
 
-
 import typer
-
-
-from .fix import *
-from .mcp import mcp
 
 
 app = typer.Typer()
@@ -26,11 +21,18 @@ def main(
         Mode.sse,
         help="Transport method for communication. 'stdio' for standard input/output, 'sse' for server-sent events.",
     ),
+    port: int = typer.Option(
+        3001,
+        help="Port number for the server. Default is 3001.",
+    ),
 ):
     # This is the main entry point of the application.
     # It is called when the application is run from the command line.
     # It initializes the MCP and runs it.
-    mcp.run(transport=transport)
+    from . import mcp
+    mcp.mcp = mcp.FastMCP("Violations manager", port=port)
+    from .fix import slow_mcp
+    mcp.mcp.run(transport=transport)
 
 
 def start():
