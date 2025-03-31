@@ -27,12 +27,23 @@ async def report_progress(
 
 @mcp.tool()
 async def fix_violation(timeout: int = 300, ctx: Context = None) -> str:
-    """Fix a violation using the fix agent.
-    """
+    """Fix a violation using the fix agent."""
 
     try:
         # Start the shell command process.
         command = f"{os.path.dirname(os.path.abspath(__file__))}/slow.sh"
+
+        # Check if the command script exists.
+        if not os.path.exists(command):
+            return f"Error: Script not found: {command}"
+
+        # Check if the script is executable.
+        if not os.access(command, os.X_OK):
+            return (
+                f"Error: Script is not executable: {command}. "
+                f"To make it executable, run: chmod +x {command}"
+            )
+
         process = await asyncio.create_subprocess_shell(
             command,
             stdout=asyncio.subprocess.PIPE,
@@ -69,4 +80,9 @@ async def fix_violation(timeout: int = 300, ctx: Context = None) -> str:
             return output
 
     except Exception as e:
+        # Cancel timer if it was started.
+        if "stop_event" in locals():
+            stop_event.set()
+        if "progress_task" in locals():
+            progress_task.cancel()
         return f"Command execution failed: {e}"
