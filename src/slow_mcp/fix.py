@@ -26,8 +26,8 @@ async def report_progress(
 
 
 @mcp.tool()
-async def fix_violation(timeout: int = 300, ctx: Context = None) -> str:
-    """Fix a violation using the fix agent."""
+async def slow_mcp(timeout: int = 300, ctx: Context = None) -> str:
+    """Run slow command and report progress."""
 
     try:
         # Start the shell command process.
