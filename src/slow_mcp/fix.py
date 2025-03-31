@@ -5,7 +5,7 @@ from mcp.server.fastmcp import Context
 
 from .mcp import mcp
 
-__all__ = ["fix_violation"]
+__all__ = ["run_command"]
 
 
 async def report_progress(
@@ -26,8 +26,8 @@ async def report_progress(
 
 
 @mcp.tool()
-async def slow_mcp(timeout: int = 300, ctx: Context = None) -> str:
-    """Run slow command and report progress."""
+async def run_command(timeout: int = 300, ctx: Context = None) -> str:
+    """Run command and report progress."""
 
     try:
         # Start the shell command process.

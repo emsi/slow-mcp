@@ -31,7 +31,7 @@ def main(
     # It initializes the MCP and runs it.
     from . import mcp
     mcp.mcp = mcp.FastMCP("Violations manager", port=port)
-    from .fix import slow_mcp
+    from .fix import run_command
     mcp.mcp.run(transport=transport)
 
 
