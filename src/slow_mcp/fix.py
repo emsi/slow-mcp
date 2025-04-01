@@ -18,6 +18,7 @@ async def report_progress(
         while not stop_event.is_set():
             elapsed = asyncio.get_running_loop().time() - start_time
             if ctx:
+                await ctx.request_context.session.send_ping()
                 await ctx.report_progress(elapsed)
             await asyncio.sleep(poll_interval)
     except asyncio.CancelledError:
